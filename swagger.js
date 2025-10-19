@@ -11,7 +11,7 @@ const doc = {
     },
     servers: [
         {
-            url: 'https://cse341-8k60.onrender.com',
+            url: 'https://lds-sheet-music.onrender.com',
             description: 'Render site'
         },
         {
