@@ -1,0 +1,110 @@
+#### ROUTES FOR LOCALHOST
+
+# POST (CREATE) TEST: Reference: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+POST http://localhost:3000/contacts HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Dallin",
+    "lastName": "Stephens",
+    "email": "dallinstephens1@gmail.com",
+    "favoriteColor": "Red",
+    "birthday": "Dec 1"
+}
+
+###
+
+# GET (READ) TEST: This request produces a json object for data for all contacts.
+GET http://localhost:3000/contacts HTTP/1.1
+
+###
+
+# PUT (UPDATE) TEST
+PUT http://localhost:3000/contacts/68e19f02ee5576c136630325 HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "George",
+    "lastName": "Washington",
+    "email": "georgewashington@gmail.com",
+    "favoriteColor": "Yellow",
+    "birthday": "Feb 22, 1732"
+}
+
+###
+
+# DELETE (DELETE) TEST
+DELETE http://localhost:3000/contacts/68dfe41f295118e4cd19e148 HTTP/1.1
+
+###
+
+# This request produces a json object for a single contact when appending ?id=someIdFromSingleContact to /contacts/single.
+GET http://localhost:3000/contacts/68d366e449379c1b0d7a8595 HTTP/1.1
+
+###
+
+# This request without ?id=... brings up html links to click for a single contact.
+# GET http://localhost:3000/contacts/single HTTP/1.1
+
+###
+
+# This request brings up html links to bring up /contacts or /single.
+GET http://localhost:3000 HTTP/1.1
+
+#### ROUTES FOR RENDER
+
+# POST (CREATE) TEST: Reference: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+POST https://cse341-8k60.onrender.com/contacts HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Abraham",
+    "lastName": "Lincoln",
+    "email": "abrahamlincoln@gmail.com",
+    "favoriteColor": "Red",
+    "birthday": "Feb 12, 1809"
+}
+
+###
+
+# GET (READ) TEST: This request produces a json object for data for all contacts.
+GET https://cse341-8k60.onrender.com/contacts HTTP/1.1
+
+###
+
+# PUT (UPDATE) TEST
+PUT https://cse341-8k60.onrender.com/contacts/68e19f02ee5576c136630325 HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "George",
+    "lastName": "Washington",
+    "email": "georgewashington@gmail.com",
+    "favoriteColor": "Yellow",
+    "birthday": "Feb 22, 1732"
+}
+
+###
+
+# DELETE (DELETE) TEST
+DELETE https://cse341-8k60.onrender.com/contacts/68e1a4cb05ce31c64dbf82b5 HTTP/1.1
+
+###
+
+# This request produces a json object for a single contact when appending ?id=someIdFromSingleContact to /contacts/single.
+GET https://cse341-8k60.onrender.com/contacts/68d366e449379c1b0d7a8595 HTTP/1.1
+
+###
+
+# This request produces a json object for a single contact when appending ?id=someIdFromSingleContact to /contacts/single.
+GET https://cse341-8k60.onrender.com/contacts/68d366e449379c1b0d7a8595 HTTP/1.1
+
+###
+
+# This request without ?id=... brings up html links to click for a single contact.
+# GET https://cse341-8k60.onrender.com/contacts/single HTTP/1.1
+
+###
+
+# This request brings up html links to bring up /contacts or /single.
+GET https://cse341-8k60.onrender.com/ HTTP/1.1

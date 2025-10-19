@@ -1,0 +1,394 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "LDS Sheet Music API",
+    "description": "This is a LDS Sheet Music API for CSE 341 that includes customers and orders.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "servers": [
+    {
+      "url": "https://cse341-8k60.onrender.com",
+      "description": "Render site"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "Localhost"
+    }
+  ],
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/customers/": {
+      "get": {
+        "tags": [
+          "GET: Customers"
+        ],
+        "description": "This is used to retrieve all the customers.",
+        "responses": {
+          "200": {
+            "description": "All customers were sucessfully found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/Customer"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error: no customers were retrieved.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "An internal server error occurred while retrieving customers."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{id}": {
+      "get": {
+        "tags": [
+          "GET: Customers"
+        ],
+        "description": "This is used to find a single customer with an id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "This is the object id of the customer to retrieve. Example id: 68e1a0b3ee5576c136630326",
+            "example": "68e1a0b3ee5576c136630326"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single customer was successfully found with a specific id.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          },
+          "400": {
+            "description": "The customer id format was not valid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid customer id format."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "The customer with the specifed id was not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The customer with the given id was not found."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error: the customer was not retrieved.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "An internal server error occurred while retrieving the customer with the given id."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PUT: Customers"
+        ],
+        "description": "This is used to update a customer by a the object id in the request.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "This is the object id of the customer to update. Example id: 68e1a0b3ee5576c136630326",
+            "example": "68e1a0b3ee5576c136630326"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "This contains the fields for the customer object to update.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A customer was updated by a id in the request. It returns the updated document.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          },
+          "400": {
+            "description": "One or more required fields are missing from the request body, an email is being used that already exists, or the customer id format is not valid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "One or more required fields are missing, an email was used that already exists, or customer id format is not valid."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "The customer with the specified id was not found or there was not a change in the request body.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The customer with the given id failed to update because that id was not found or there was no change in the body for that id."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "An internal server error occurred with updating a customer with a given id.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error: the customer with the given id was not updated."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DELETE: Customers"
+        ],
+        "description": "This is used to delete a customer with a specified id in the request.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "This is the id of the customer to delete. Example id: 68e1a0b3ee5576c136630326",
+            "example": "68e1a0b3ee5576c136630326"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The customer with the given id was deleted. No content is returned."
+          },
+          "400": {
+            "description": "The customer id format is not valid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid customer id format."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "The customer with the specified id was not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The customer with the given id failed to delete because the id was not found."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "An internal server error occurred with deleting a customer with a given id.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error: the customer with the given id was not deleted."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers": {
+      "post": {
+        "tags": [
+          "POST: Customers"
+        ],
+        "description": "This is used to create a new customer.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "This contains the customer object that contains the data to create.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A customer was successfully created.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          },
+          "400": {
+            "description": "One or more required fields are missing from the request body or an email is being used that already exists.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "One or more required fields are missing or an email was used that already exists."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "An internal server error with creating a customer.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error: the customer failed to be added."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string",
+          "example": "123 Peach Ln"
+        },
+        "city": {
+          "type": "string",
+          "example": "Bountiful"
+        },
+        "state": {
+          "type": "string",
+          "example": "UT"
+        },
+        "zip": {
+          "type": "string",
+          "example": "84010"
+        },
+        "country": {
+          "type": "string",
+          "example": "US"
+        }
+      }
+    },
+    "Customer": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "Dallin"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Stephens"
+        },
+        "email": {
+          "type": "string",
+          "example": "dallinstephens1@gmail.com"
+        },
+        "billingAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "shippingAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "phone": {
+          "type": "string",
+          "example": "801-123-4567"
+        }
+      }
+    }
+  }
+}
