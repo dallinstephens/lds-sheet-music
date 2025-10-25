@@ -9,6 +9,9 @@ const doc = {
         title: 'LDS Sheet Music API',
         description: 'This is a LDS Sheet Music API for CSE 341 that includes customers and orders.'
     },
+    host: 'localhost:3000',
+    schemes: ['http'],
+    basePath: ['/'],
     servers: [
         {
             url: 'https://lds-sheet-music.onrender.com',
@@ -43,6 +46,6 @@ const outputFile = './swagger.json';
 // It is called endpointsFiles because [] indicate an array of items even though
 // in this case there is only one endpoints file which is routes/index.js.
 // npm run swagger is needed after comments are added or changed to show up in /api-docs.
-const endpointsFiles = ['./routes/customers.js'];
+const endpointsFiles = ['./routes/index.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

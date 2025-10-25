@@ -1,3 +1,9 @@
+const mongoose = require('mongoose');
+
+// The variable isValidObjectId is used to check if the id is a valid MongoDB ObjectId format
+// and provides a quick 400 status code response if the id is not a valid MongoDB ObjectId format.
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
+
 // This provides access to the mongoose functions such as .find() and .get().. 
 const Customer = require('../models/customer');
 
@@ -57,8 +63,13 @@ const getCustomerById = async (req, res) => {
       }                    
   */
 
+  const { id } = req.params;
+
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({message: 'Invalid customer id format.'});
+  }      
+
   try {
-    const { id } = req.params;
     const customer = await Customer.findById(id);
 
     if (!customer) {
@@ -67,9 +78,9 @@ const getCustomerById = async (req, res) => {
 
     res.status(200).json(customer);
   } catch (error) {
-    if (error.kind === 'ObjectId') {
-      return res.status(400).json({message: 'Invalid customer id format.'});
-    }
+    // if (error.kind === 'ObjectId') {
+    //   return res.status(400).json({message: 'Invalid customer id format.'});
+    // }
 
     return res.status(500).json({ message: 'An internal server error occurred while retrieving the customer with the given id.' });
   }
@@ -139,11 +150,14 @@ const updateCustomerById = async (req, res) => {
           required: true,
           description: 'This contains the fields for the customer object to update.',
           schema: { $ref: '#/definitions/Customer' }
-      }                
-      #swagger.responses[200] = {
-          description: 'A customer was updated by a id in the request. It returns the updated document.',
-          schema: { $ref: '#/definitions/Customer' }
       }
+      #swagger.responses[204] = {
+          description: 'A status of 204 (No Content) indicates the customer update was successful.',
+      }                           
+      // #swagger.responses[200] = {
+      //     description: 'A customer was updated by a id in the request. It returns the updated document.',
+      //     schema: { $ref: '#/definitions/Customer' }
+      // }
       #swagger.responses[404] = {
           description: 'The customer with the specified id was not found or there was not a change in the request body.',
           schema: { message: 'The customer with the given id failed to update because that id was not found or there was no change in the body for that id.' }
@@ -158,16 +172,21 @@ const updateCustomerById = async (req, res) => {
       }       
   */
 
-  try {
-    const { id } = req.params;
+  const { id } = req.params;
 
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({message: 'Invalid customer id format.'});
+  }      
+
+  try {
     const customerData = req.body;
     
     const updatedCustomer = await Customer.findByIdAndUpdate(
       id,
       customerData,
       {
-        new: true, // this returns the updated document
+        // new: true, // this returns the updated document
+        new: false, // This is set to false because no content is returned with 204 status code response.
         runValidators: true // this re-runs all schema validators on the updated data
       }
     );
@@ -179,7 +198,9 @@ const updateCustomerById = async (req, res) => {
       });    
     }
 
-    return res.status(200).json(updatedCustomer);
+    // Return 204 (No Content)
+    return res.status(204).send();
+    // return res.status(200).json(updatedCustomer);
 
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -215,9 +236,13 @@ const deleteCustomerById = async (req, res) => {
           description: 'The customer with the specified id was not found.',
           schema: { message: 'The customer with the given id failed to delete because the id was not found.' }
       }
-      #swagger.responses[204] = {
-          description: 'The customer with the given id was deleted. No content is returned.',
-      }
+      #swagger.responses[200] = {
+          description: 'The customer with the given id was successfully deleted.',
+          schema: { message: 'The customer with the given id was succesfully deleted.' }
+      }           
+      // #swagger.responses[204] = {
+      //     description: 'The customer with the given id was deleted. No content is returned.',
+      // }
       #swagger.responses[400] = {
           description: 'The customer id format is not valid.',
           schema: { message: 'Invalid customer id format.' }
@@ -230,9 +255,13 @@ const deleteCustomerById = async (req, res) => {
 
   // Note: The request body is not needed to delete a document.
 
-  try {
-    const { id } = req.params;
+  const { id } = req.params;
 
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({message: 'Invalid customer id format.'});
+  }
+
+  try {
     const deletedCustomer = await Customer.findByIdAndDelete(id);
 
     if (!deletedCustomer) {
@@ -242,13 +271,13 @@ const deleteCustomerById = async (req, res) => {
       });    
     }
     
-    return res.status(204).send();
-    // return res.status(200).json({ message: 'The customer with the given id was deleted successfully!'});
+    // return res.status(204).send();
+    return res.status(200).json({ message: 'The customer with the given id was deleted successfully!'});
 
   } catch (error) {
-    if (error.kind === 'ObjectId') {
-      return res.status(400).json({message: 'Invalid customer id format.'});
-    }
+    // if (error.kind === 'ObjectId') {
+    //   return res.status(400).json({message: 'Invalid customer id format.'});
+    // }
 
     return res.status(500).json({
       message: error.message || 'Internal server error: the customer with the given id was not deleted.'

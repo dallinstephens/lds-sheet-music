@@ -29,13 +29,6 @@ const connectMongodb = require('./db/connect');
 // process.env.MONGODB_URI retreives MONGODB_URI variable from host such as Render.
 const MONGODB_URI = process.env.MONGODB_URI;
 
-// References for Swagger API Documentation:
-// https://www.npmjs.com/package/swagger-autogen?activeTab=readme#documentation
-// https://swagger-autogen.github.io/docs/getting-started/quick-start
-// https://www.npmjs.com/package/swagger-ui-express
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
-
 app
   // This checks if an incoming http request is json. If it is, then it
   // parses the json string into a usuable javascript json object and attaches it to
@@ -43,8 +36,18 @@ app
   // be undefined or an empty object {}. 
   .use(express.json())
   .use(cors())
-  .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-  .use('/', require('./routes/customers'));
+  .use('/', require('./routes'));
+
+// References for process.on code: 
+// https://www.youtube.com/watch?v=S0przpEKKGU
+// https://nodejs.org/api/process.html
+// This is used for unexpected API validation errors and to prevent the application from crashing.
+// It logs the error and the origin.
+// 'stderr' stands for standard error.
+// 'fd' stands for file descriptor. 
+process.on('uncaughtException', (err, origin) => {
+  console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+});  
 
 // When a client makes a specific request in a web browser to the root path '/',
 // then execute this function. The 'get' in this case checks if the API is running.
@@ -55,8 +58,8 @@ app
 // res.send() which sends a simple message, res.json() which sends a json response, and
 // res.status() which sends the http status code such as 200.  
 app.get('/', (req, res) => {
-  res.send('LDS Sheet Music API is running!')
-})
+  res.redirect('/api-docs');
+});
 
 // Another way of writing this is this: async function startServer() {
 const startServer = async () => {
@@ -73,8 +76,8 @@ const startServer = async () => {
 
   app.listen(PORT, () => {
     console.log(`Web Server is listening at port ${PORT}.`);
-    console.log(`Access at http://localhost:${PORT}/customers`);
-    console.log(`Access at http://localhost:${PORT}/api-docs`);
+    console.log(`Access api-docs at http://localhost:${PORT}`);
+    console.log(`Access customers at http://localhost:${PORT}/customers`);
   });
 }; 
 

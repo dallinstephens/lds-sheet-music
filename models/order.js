@@ -5,6 +5,8 @@
 // loads the functionality into the variable mongoose
 const mongoose = require('mongoose');
 
+const addressSchema = require('./shared/address');
+
 // moongoose.Schema obtains the function Schema from the mongoose library and
 // assigns it to the local variable Schema
 const Schema = mongoose.Schema;
@@ -20,11 +22,13 @@ const orderItemSchema = new Schema({
     },
     qty: {
         type: Number,
-        required: true
+        required: true,
+        min: [1, 'Quantity must be at least 1.']
     },
     price: {
         type: Number,
-        required: true
+        required: true,
+        min: [0, 'Price must be non-negative.']
     }
 }, {_id: false}); // The second argument is the options object which is '{_id: false})'. 
 
@@ -46,19 +50,38 @@ const orderSchema = new Schema({
         ref: 'Customer',
         required: true
     },
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
+    billingAddress: {
+        type: addressSchema,
+        required: true
+    },
+    shippingAddress: addressSchema,
     // Brackets are used because this is an array of items even if it is one item.
-    items: [orderItemSchema],
+    items: {
+        type: [orderItemSchema],
+        required: [true, 'The order must contain at least 1 item.']
+    },
     subtotal: {
         type: Number,
-        required: true
+        required: true,
+        min: [0, 'Subtotal cannot be negative.']
     },
     shippingPrice: {
         type: Number,
-        required: true
+        required: true,
+        min: [0, 'Shipping price cannot be negative.']
     },
     totalPrice: {
         type: Number,
-        required: true
+        required: true,
+        min: [0, 'Total price cannot be negative.']
     },
     orderDate: {
         type: Date,

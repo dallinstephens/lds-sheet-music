@@ -16,7 +16,9 @@
       "description": "Localhost"
     }
   ],
-  "basePath": "/",
+  "basePath": [
+    "/"
+  ],
   "schemes": [
     "http"
   ],
@@ -54,6 +56,61 @@
                 "message": {
                   "type": "string",
                   "example": "An internal server error occurred while retrieving customers."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "POST: Customers"
+        ],
+        "description": "This is used to create a new customer.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "This contains the customer object that contains the data to create.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A customer was successfully created.",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          },
+          "400": {
+            "description": "One or more required fields are missing from the request body or an email is being used that already exists.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "One or more required fields are missing or an email was used that already exists."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "An internal server error with creating a customer.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error: the customer failed to be added."
                 }
               },
               "xml": {
@@ -165,6 +222,9 @@
               "$ref": "#/definitions/Customer"
             }
           },
+          "204": {
+            "description": "A status of 204 (No Content) indicates the customer update was successful."
+          },
           "400": {
             "description": "One or more required fields are missing from the request body, an email is being used that already exists, or the customer id format is not valid.",
             "schema": {
@@ -228,6 +288,21 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "The customer with the given id was successfully deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The customer with the given id was succesfully deleted."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "204": {
             "description": "The customer with the given id was deleted. No content is returned."
           },
@@ -269,63 +344,6 @@
                 "message": {
                   "type": "string",
                   "example": "Internal server error: the customer with the given id was not deleted."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/customers": {
-      "post": {
-        "tags": [
-          "POST: Customers"
-        ],
-        "description": "This is used to create a new customer.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "This contains the customer object that contains the data to create.",
-            "schema": {
-              "$ref": "#/definitions/Customer"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "A customer was successfully created.",
-            "schema": {
-              "$ref": "#/definitions/Customer"
-            }
-          },
-          "400": {
-            "description": "One or more required fields are missing from the request body or an email is being used that already exists.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "One or more required fields are missing or an email was used that already exists."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500": {
-            "description": "An internal server error with creating a customer.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal server error: the customer failed to be added."
                 }
               },
               "xml": {
