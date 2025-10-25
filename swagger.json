@@ -5,7 +5,7 @@
     "description": "This is a LDS Sheet Music API for CSE 341 that includes customers and orders.",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "lds-sheet-music.onrender.com",
   "servers": [
     {
       "url": "https://lds-sheet-music.onrender.com",
@@ -20,7 +20,7 @@
     "/"
   ],
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/customers/": {

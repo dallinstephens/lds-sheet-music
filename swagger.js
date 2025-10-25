@@ -9,8 +9,8 @@ const doc = {
         title: 'LDS Sheet Music API',
         description: 'This is a LDS Sheet Music API for CSE 341 that includes customers and orders.'
     },
-    host: 'localhost:3000',
-    schemes: ['http'],
+    host: 'lds-sheet-music.onrender.com',
+    schemes: ['https'],
     basePath: ['/'],
     servers: [
         {
