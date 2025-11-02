@@ -4,7 +4,7 @@
 // require loads the mongoose package from the node_modules folder and
 // loads the functionality into the variable mongoose
 const mongoose = require('mongoose');
-
+const userAuthSchema = require('./shared/user_auth');
 const addressSchema = require('./shared/address');
 
 // moongoose.Schema obtains the function Schema from the mongoose library and
@@ -12,10 +12,9 @@ const addressSchema = require('./shared/address');
 const Schema = mongoose.Schema;
 
 const customerSchema = new Schema({
-    googleId: {
-        type: String,
-        unique: true,
-        required: true
+    auth: {
+        type: userAuthSchema,
+        required: [true, 'Authentication details are required for a customer.']
     },    
     firstName: {
         type: String,
@@ -64,7 +63,7 @@ const customerSchema = new Schema({
         trim: true,
         match: [/^[0-9\s()+-]+$/, 'The phone number must contain only numbers, spaces, parentheses, the plus sign (+), and hyphens (-).']
     }
-});
+}, {timestamps: true }); // 'timestamps: true' adds 'createdAt' and 'updatedAt' to the customer record
 
 // mongoose.model('Customer', customerSchema) creates a mongoose model object called 'Customer'
 // so that mongoose functions like .find() and .create() can function properly within 
