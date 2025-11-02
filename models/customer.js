@@ -12,6 +12,11 @@ const addressSchema = require('./shared/address');
 const Schema = mongoose.Schema;
 
 const customerSchema = new Schema({
+    googleId: {
+        type: String,
+        unique: true,
+        required: true
+    },    
     firstName: {
         type: String,
         trim: true,
