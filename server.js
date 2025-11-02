@@ -22,7 +22,7 @@ const app = express();
 // process.env.PORT retreives .env PORT variable if local, but when application is deployed
 // process.env.PORT retreives PORT variable from host such as Render.
 // 8000 is used when there is no .env PORT variable
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 const connectMongodb = require('./db/connect');
 
 // process.env.MONGODB_URI retreives .env MONGODB_URI variable if local, but when application is deployed
