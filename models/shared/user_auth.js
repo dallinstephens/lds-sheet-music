@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 // assigns it to the local variable Schema
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const userAuthSchema = new Schema({
     googleId: {
         type: String,
         unique: true,
@@ -23,9 +23,7 @@ const userSchema = new Schema({
         // Default thumbnail image can be created from here: https://placehold.co/
         default: 'https://placehold.co/100x100?text=P'
     }    
-});
+}, {_id: false});
 
-// mongoose.model('User', userSchema) creates a mongoose model object called 'User'
-// so that mongoose functions like .find() and .create() can function properly within 
-// the controller file
-module.exports = mongoose.model('User', userSchema);
+// userAuthSchema is exported so that it can be used by models/customer.js
+module.exports = userAuthSchema;
