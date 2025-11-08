@@ -13,6 +13,20 @@ require('dotenv').config();
 // express is used to define routes and handle http requests
 const express = require('express');
 
+// Mongoose is needed for the session store.
+const mongoose = require('mongoose');
+
+// This package handles creating, managing, and expiring sessions for users by setting a session Id cookie in the browser and is used by Passport.
+const session = require('express-session');
+
+// This package tells express-session to use the MongoDB database to save the session information so that the session data is stored on the server.
+const MongoStore = require('connect-mongo');
+
+const passport = require('passport');
+
+// This excutes every line of code in config/passport-setup.js.
+require('./config/passport-setup');
+
 // CORS 
 const cors = require('cors');
 
@@ -25,9 +39,35 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const connectMongodb = require('./db/connect');
 
+// isProduction is undefined which sets isProduction to false when localhost and production when Render site is used.
+const isProduction = process.env.NODE_ENV === 'production';
+
 // process.env.MONGODB_URI retreives .env MONGODB_URI variable if local, but when application is deployed
 // process.env.MONGODB_URI retreives MONGODB_URI variable from host such as Render.
 const MONGODB_URI = process.env.MONGODB_URI;
+
+// Reference for express-session: https://expressjs.com/en/resources/middleware/session.html
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false, // Prevents session from being resaved again to the store if on every request the session has not been modified
+  saveUninitialized: false, // Prevents session form be saved when it is new but the session has not been modified
+  // Reference for connect-mongo: https://www.npmjs.com/package/connect-mongo
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    mongooseConnection: mongoose.connection, // This instructs the session store to use the existing Mongoose connection.
+    collectionName: 'sessions',
+    ttl: 1 * 24 * 60 * 60 // ttl (time to live) - expires in 1 day = 86,400 seconds = 24 hours * 60 minutes / 1 hour * 60 seconds / 1 minutes
+  }),
+  cookie: {
+    maxAge: 1 * 24 * 60 * 60 * 1000, // This is one day in milliseconds: maxAge is in milliseconds.
+    secure: isProduction, // Cookies can only be sent over https when 'secure: true'.
+    sameSite: isProduction ? 'none' : 'lax' // 'sameSite: none' required for cross-site OAuth redirects. 'sameSite: lax' is so localhost will work.
+  }
+}))
+
+// Reference for Passport Initialization: https://www.npmjs.com/package/passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app
   // This checks if an incoming http request is json. If it is, then it

@@ -110,4 +110,5 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+// This line is not currently used, but it is good practice to keep it in case it is needed.
 module.exports = passport;
