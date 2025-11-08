@@ -19,6 +19,7 @@ const mongoose = require('mongoose');
 // This package handles creating, managing, and expiring sessions for users by setting a session Id cookie in the browser and is used by Passport.
 const session = require('express-session');
 
+// Reference for connect-mongo: https://www.npmjs.com/package/connect-mongo
 // This package tells express-session to use the MongoDB database to save the session information so that the session data is stored on the server.
 const MongoStore = require('connect-mongo');
 
