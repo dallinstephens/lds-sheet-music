@@ -20,7 +20,7 @@ passport.use(new GoogleStrategy({
     // When user clicks "Sign in with Google", it redirects the browser to Google's official login domain at accounts.google.com.
     // When user clicks "Sign in with Google", the express server via passport builds and passes a hidden special url that 
     // contains clientID, scope, and callbackURL to accounts.google.com.
-    callbackURL: "/auth/google/callback",
+    callbackURL: "https://lds-sheet-music.onrender.com/auth/google/callback",
     // The scope requests permissions from Google to obtain the user's Google profile and the user's Google email.
     scope: ['profile', 'email']
   },

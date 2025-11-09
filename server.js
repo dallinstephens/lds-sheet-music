@@ -55,6 +55,12 @@ const passport = require('passport');
 // CORS 
 const cors = require('cors');
 
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://lds-sheet-music.onrender.com'],
+  methods: ['GET, POST, PUT, DELETE'],
+  credentials: true
+}
+
 // app is express variable 
 const app = express();
 
@@ -104,7 +110,7 @@ app
   // the request body in req.body. If it is not json, then the req.body will
   // be undefined or an empty object {}. 
   .use(express.json())
-  .use(cors())
+  .use(cors(corsOptions))
   .use('/', require('./routes'));
 
 // References for process.on code: 
