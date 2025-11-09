@@ -14,7 +14,7 @@ const Schema = mongoose.Schema;
 const customerSchema = new Schema({
     auth: {
         type: userAuthSchema,
-        required: [true, 'Authentication details are required for a customer.']
+        // required: [true, 'Authentication details are required for a customer.']
     },    
     firstName: {
         type: String,

@@ -86,7 +86,7 @@ Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z
 # Test logout POST request: need to delete cookie
 # To test, paste cookie from browser in this: Cookie: connect.sid={{sessionCookie}}
 POST https://lds-sheet-music.onrender.com/auth/logout HTTP/1.1
-Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
+Cookie: connect.sid=s%3ASG_PZw5ndSjqAqO_yvjvc9IRKwZDubr-.MhyUypNGp0Ms%2BLiKoc3IXpiZp2o5UlxVI1ZJLQBfjVo
 
 # GET (READ) TEST: Get all customers - This request produces a json object for data for all customers.
 GET https://lds-sheet-music.onrender.com/customers HTTP/1.1
@@ -96,7 +96,7 @@ Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z
 
 # GET (READ) TEST: Get customer by id - This request produces a json object for a single customer when appending ?id=someIdFromSingleCustomer to /customers/.
 GET https://lds-sheet-music.onrender.com/customers/68f44922b43746b12b968028 HTTP/1.1
-Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
+Cookie: connect.sid=s%3A2TWONNqMegQJbW3YU0A_u81azXKdbktb.0m0EodvVUTin59wchEcT7TRtNG%2BczWwbTRcig1O2mwg
 
 ###
 
