@@ -180,10 +180,18 @@ const updateCustomerById = async (req, res) => {
 
   try {
     const customerData = req.body;
+
+    const currentCustomer = await Customer.findById(id);
+
+    const updateData = { ...customerData }; // dots are used so that customerData is not manipulated
+
+    if (updateData.email && updateData.email === currentCustomer.email) {
+      delete updateData.email;
+    }
     
     const updatedCustomer = await Customer.findOneAndUpdate(
       { _id: id },
-      { $set: customerData},
+      { $set: updateData},
       {
         // new: true, // this returns the updated document
         new: false, // This is set to false because no content is returned with 204 status code response.
