@@ -1,5 +1,13 @@
 #### ROUTES FOR LOCALHOST
 
+# ATTENTION! Need to login first at this Google login route http://localhost:3000/auth/google before other .rest links will work:
+
+# Test logout POST request: need to delete cookie
+# To test, paste cookie from browser in this: Cookie: connect.sid={{sessionCookie}}
+POST http://localhost:3000/auth/logout HTTP/1.1
+Cookie: connect.sid=s%3AyM0oNVygRcno_EY1V78VhYySymg_et9-.eBMpQPy%2FBFsLbsPixnCBoqwanNhGOP14rktKlR8hibU
+
+###
 # GET (READ) TEST: Get all customers - This request produces a json object for data for all customers.
 GET http://localhost:3000/customers HTTP/1.1
 

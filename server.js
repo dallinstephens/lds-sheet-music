@@ -13,20 +13,44 @@ require('dotenv').config();
 // express is used to define routes and handle http requests
 const express = require('express');
 
+// Using session cookie instead of JWT
 // Mongoose is needed for the session store.
 const mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
+
+// Using session cookie instead of JWT
 // This package handles creating, managing, and expiring sessions for users by setting a session Id cookie in the browser and is used by Passport.
 const session = require('express-session');
 
+// Using session cookie instead of JWT
 // Reference for connect-mongo: https://www.npmjs.com/package/connect-mongo
 // This package tells express-session to use the MongoDB database to save the session information so that the session data is stored on the server.
 const MongoStore = require('connect-mongo');
 
 const passport = require('passport');
 
+// Using session cookie instead of JWT
+// Reference for JWT: https://www.npmjs.com/package/jsonwebtoken
+// const jwt = require('jsonwebtoken');
+
+// if (jwt) {
+//   console.log('JWT package loaded successfully!');
+// } else {
+//   console.error('JWT package failed to load!');
+// }
+
+// JWT_SECRET is defined here and to ensure it loaded from the .env file.
+// const JWT_SECRET = process.env.JWT_SECRET;
+
+// if (JWT_SECRET) {
+//   console.log('JWT_SECRET loaded successfully!');
+// } else {
+//   console.error('JWT_SECRET failed to load!');
+// }
+
 // This excutes every line of code in config/passport-setup.js.
-require('./config/passport-setup');
+ require('./config/passport-setup');
 
 // CORS 
 const cors = require('cors');
@@ -40,6 +64,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const connectMongodb = require('./db/connect');
 
+// Using session cookie instead of JWT
 // isProduction is undefined which sets isProduction to false when localhost and production when Render site is used.
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -47,6 +72,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 // process.env.MONGODB_URI retreives MONGODB_URI variable from host such as Render.
 const MONGODB_URI = process.env.MONGODB_URI;
 
+// Using session cookie instead of JWT
 // Reference for express-session: https://expressjs.com/en/resources/middleware/session.html
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -55,7 +81,7 @@ app.use(session({
   // Reference for connect-mongo: https://www.npmjs.com/package/connect-mongo
   store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI,
-    mongooseConnection: mongoose.connection, // This instructs the session store to use the existing Mongoose connection.
+    // mongooseConnection: mongoose.connection, // This instructs the session store to use the existing Mongoose connection.
     collectionName: 'sessions',
     ttl: 1 * 24 * 60 * 60 // ttl (time to live) - expires in 1 day = 86,400 seconds = 24 hours * 60 minutes / 1 hour * 60 seconds / 1 minutes
   }),
@@ -68,6 +94,8 @@ app.use(session({
 
 // Reference for Passport Initialization: https://www.npmjs.com/package/passport
 app.use(passport.initialize());
+
+// Using session cookie instead of JWT
 app.use(passport.session());
 
 app
@@ -86,9 +114,9 @@ app
 // It logs the error and the origin.
 // 'stderr' stands for standard error.
 // 'fd' stands for file descriptor. 
-process.on('uncaughtException', (err, origin) => {
-  console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
-});  
+// process.on('unhandledRejection', (err, origin) => {
+//   console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+// });  
 
 // When a client makes a specific request in a web browser to the root path '/',
 // then execute this function. The 'get' in this case checks if the API is running.
@@ -116,6 +144,7 @@ const startServer = async () => {
   await connectMongodb(MONGODB_URI);
 
   app.listen(PORT, () => {
+    console.log(`First log into Google login route here: http://localhost:${PORT}/auth/google`);
     console.log(`Web Server is listening at port ${PORT}.`);
     console.log(`Access api-docs at http://localhost:${PORT}`);
     console.log(`Access customers at http://localhost:${PORT}/customers`);

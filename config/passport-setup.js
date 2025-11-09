@@ -28,86 +28,92 @@ passport.use(new GoogleStrategy({
   // The word 'async' is needed because we are checking if the email is in our database.
   // The word 'done' is used as a callback function created from passport: 'done' is used here, but it could be called 
   // something else like 'cb' for callback function.
-  async (profile, done) => {
+  (accessToken, refreshToken, profile, done) => {
     const userEmail = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : null;
 
     if (!userEmail) {
         return done(new Error('Google did not return an email address!'), null);
     }
 
-    try {
-        // The variable 'currentUser' contains the entire customer mongodb record if it exists. Otherwise,
-        // 'currentUser' will be null. 'Customer' comes from models/customer and 'findOne' is a Mongoose function
-        // that can be used because 'const mongoose = require('mongoose');' is at the top of models/customer.js.
-        let currentUser = await Customer.findOne({ email: userEmail});
+    // The variable 'currentUser' contains the entire customer mongodb record if it exists. Otherwise,
+    // 'currentUser' will be null. 'Customer' comes from models/customer and 'findOne' is a Mongoose function
+    // that can be used because 'const mongoose = require('mongoose');' is at the top of models/customer.js.
+    Customer.findOne({ email: userEmail})
+      .then(currentUser => {
+          if (currentUser) {
+              console.log('User found and logged in: ', currentUser.email);
+              // 'null' passed into the first argument tells passport that the authentication was successful and that
+              // there was no error during the database check.
+              // 'currentUser' passed into the second argument tells passport to serialize the currentUser object to
+              // create the session cookie. A session cookie is an encrypted token that allows the server to recognize
+              // the logged-in user. Upon logout, the server deletes the cookie.
+              // The 'currentUser' here becomes the user in 'passport.serializeUser( (user, done)'.
+              return done(null, currentUser);
+          } else {
+              console.log('A new user was detected and new record will be created.');
 
-        if (currentUser) {
-            console.log('User found and logged in: ', currentUser.email);
-            // 'null' passed into the first argument tells passport that the authentication was successful and that
-            // there was no error during the database check.
-            // 'currentUser' passed into the second argument tells passport to serialize the currentUser object to
-            // create the session cookie. A session cookie is an encrypted token that allows the server to recognize
-            // the logged-in user. Upon logout, the server deletes the cookie.
-            // The 'currentUser' here becomes the user in 'passport.serializeUser( (user, done)'.
-            done(null, currentUser);
-        } else {
-            console.log('A new user was detected and new record will be created.');
+              const userThumbnail = profile.photos && profile.photos.length > 0 ? profile.photos[0].value : 'https://placehold.co/100x100?text=P';
 
-            const userThumbnail = profile.photos && profile.photos.length > 0 ? profile.photos[0].value : 'https://placehold.co/100x100?text=P';
+              return Customer.create({
+                  auth: {
+                    googleId: profile.id,
+                    username: `${profile.name.givenName || ''} ${profile.name.familyName || ''}`.trim(),
+                    thumbnail: userThumbnail
 
-            const newUser = await Customer.create({
-                auth: {
-                  googleId: profile.id,
-                  username: `${profile.name.givenName || ''} ${profile.name.familyName || ''}`.trim(),
-                  thumbnail: userThumbnail
-
-                },
-                firstName: profile.name.givenName || 'Unknown',
-                lastName: profile.name.familyName || 'Unknown',
-                email: userEmail,
-                billingAddress: {
-                  street: '123 Placeholder St',
-                  city: 'Placeholder City',
-                  state: 'UT',
-                  zip: '84000',
-                  country: 'US'
-                },
-                shippingAddress: {
-                  street: '123 Placeholder St',
-                  city: 'Placeholder City',
-                  state: 'UT',
-                  zip: '84000',
-                  country: 'US'
-                },
-                phone: '123-456-7890'
-            });
-
-            console.log('New customer created: ', newUser.email);
-            // // The 'newUser' here becomes the user in 'passport.serializeUser( (user, done)'.
-            done(null, newUser);
-        }
-    } catch (err) {
+                  },
+                  firstName: profile.name.givenName || 'Unknown',
+                  lastName: profile.name.familyName || 'Unknown',
+                  email: userEmail,
+                  billingAddress: {
+                    street: '123 Placeholder St',
+                    city: 'Placeholder City',
+                    state: 'UT',
+                    zip: '84000',
+                    country: 'US'
+                  },
+                  shippingAddress: {
+                    street: '123 Placeholder St',
+                    city: 'Placeholder City',
+                    state: 'UT',
+                    zip: '84000',
+                    country: 'US'
+                  },
+                  phone: '123-456-7890'
+              })
+              .then(newUser => {
+                  console.log('New customer created: ', newUser.email);
+                // The 'newUser' here becomes the user in 'passport.serializeUser( (user, done)'.
+                return done(null, newUser);
+              });
+          }
+      })
+      .catch(err => {
         console.error('Database error occurred during OAuth callback:', err);
         return done(err, null); // This passes errors back to passport.
-    }
+      });
   }
-));
+ ));
 
+// Using session cookie instead of JWT
 passport.serializeUser( (user, done) => {
   // Passport takes the entire user object and returns only the user id which is then
   // encrypted using the SESSION_SECRET key and saved in the browser's session cookie.
   done(null, user.id);
 });
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    // Passport extracts the id from the browser's session cookie where the id is used to
-    // obtain the entire user object.
-    const user = await Customer.findById(id);
-    done(null, user);
-  } catch (err) {
-    return done(err, null);
-  }
+// Using session cookie instead of JWT
+passport.deserializeUser(function(id, done) {
+  // Passport extracts the id from the browser's session cookie where the id is used to
+  // obtain the entire user object.
+  Customer.findById(id)
+    .then(user => {
+      // Success: user is the Customer object
+      done(null, user);
+    })
+    .catch(err => {
+      console.error('Error occurred during deserialization: ', err);
+      done(err, null);
+    });
 });
 
 // This line is not currently used, but it is good practice to keep it in case it is needed.
