@@ -48,6 +48,9 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal server error: no customers were retrieved.",
             "schema": {
@@ -102,6 +105,9 @@
                 "name": "main"
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "An internal server error with creating a customer.",
@@ -158,6 +164,9 @@
                 "name": "main"
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "The customer with the specifed id was not found.",
@@ -240,6 +249,9 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "The customer with the specified id was not found or there was not a change in the request body.",
             "schema": {
@@ -321,6 +333,9 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "The customer with the specified id was not found.",
             "schema": {
@@ -350,6 +365,382 @@
                 "name": "main"
               }
             }
+          }
+        }
+      }
+    },
+    "/orders/": {
+      "get": {
+        "tags": [
+          "GET: Orders"
+        ],
+        "description": "This is used to retrieve all the orders.",
+        "responses": {
+          "200": {
+            "description": "All orders were sucessfully found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/Order"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error: no orders were retrieved.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "An internal server error occurred while retrieving orders."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "POST: Orders"
+        ],
+        "description": "This is used to create a new order.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "This contains the order object that contains the data to create.",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A order was successfully created.",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          },
+          "400": {
+            "description": "One or more required fields are missing from the request body or an email is being used that already exists.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "One or more required fields are missing or an email was used that already exists."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "An internal server error with creating a order.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error: the order failed to be added."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "tags": [
+          "GET: Orders"
+        ],
+        "description": "This is used to find a single order with an id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "This is the object id of the order to retrieve. Example id: 68e1a0b3ee5576c136630326",
+            "example": "68e1a0b3ee5576c136630326"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single order was successfully found with a specific id.",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          },
+          "400": {
+            "description": "The order id format was not valid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid order id format."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "The order with the specifed id was not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The order with the given id was not found."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error: the order was not retrieved.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "An internal server error occurred while retrieving the order with the given id."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PUT: Orders"
+        ],
+        "description": "This is used to update a order by a the object id in the request.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "This is the object id of the order to update. Example id: 68e1a0b3ee5576c136630326",
+            "example": "68e1a0b3ee5576c136630326"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "This contains the fields for the order object to update.",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A order was updated by a id in the request. It returns the updated document.",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          },
+          "204": {
+            "description": "A status of 204 (No Content) indicates the order update was successful."
+          },
+          "400": {
+            "description": "One or more required fields are missing from the request body, an email is being used that already exists, or the order id format is not valid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "One or more required fields are missing, an email was used that already exists, or order id format is not valid."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "The order with the specified id was not found or there was not a change in the request body.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The order with the given id failed to update because that id was not found or there was no change in the body for that id."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "An internal server error occurred with updating a order with a given id.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error: the order with the given id was not updated."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DELETE: Orders"
+        ],
+        "description": "This is used to delete a order with a specified id in the request.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "This is the id of the order to delete. Example id: 68e1a0b3ee5576c136630326",
+            "example": "68e1a0b3ee5576c136630326"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The order with the given id was successfully deleted.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The order with the given id was succesfully deleted."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "204": {
+            "description": "The order with the given id was deleted. No content is returned."
+          },
+          "400": {
+            "description": "The order id format is not valid.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Invalid order id format."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "The order with the specified id was not found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The order with the given id failed to delete because the id was not found."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "An internal server error occurred with deleting a order with a given id.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error: the order with the given id was not deleted."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/google/callback": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
@@ -405,6 +796,69 @@
         "phone": {
           "type": "string",
           "example": "801-123-4567"
+        }
+      }
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "example": "68f44871b43746b12b968024"
+        },
+        "firstName": {
+          "type": "string",
+          "example": "Dallin"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Stephens"
+        },
+        "billingAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "shippingAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sku": {
+                "type": "string",
+                "example": "01965"
+              },
+              "title": {
+                "type": "string",
+                "example": "50 Hymn Preludes for the Base Coupler Organist Vol. 2"
+              },
+              "qty": {
+                "type": "number",
+                "example": 1
+              },
+              "price": {
+                "type": "number",
+                "example": 16.95
+              }
+            }
+          }
+        },
+        "subtotal": {
+          "type": "number",
+          "example": 16.95
+        },
+        "shippingPrice": {
+          "type": "number",
+          "example": 6.35
+        },
+        "totalPrice": {
+          "type": "number",
+          "example": 23.3
+        },
+        "orderDate": {
+          "type": "string",
+          "example": "2025-11-08T17:00:00:00.000Z0"
         }
       }
     }

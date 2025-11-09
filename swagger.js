@@ -37,6 +37,26 @@ const doc = {
             billingAddress: { $ref: '#/definitions/Address' },
             shippingAddress: { $ref: '#/definitions/Address' },
             phone: '801-123-4567'
+        },
+        Order: {
+            customer_id: '68f44871b43746b12b968024',
+            firstName: 'Dallin',
+            lastName: 'Stephens',
+            billingAddress: { $ref: '#/definitions/Address' },
+            shippingAddress: { $ref: '#/definitions/Address' },
+            items: [
+                {
+                    // Reference for item info: https://jackmanmusic.com/products/50-hymn-preludes-for-the-bass-coupler-organist-vol-2?_pos=1&_sid=891647fba&_ss=r&variant=31775358910582
+                    sku: '01965',
+                    title: '50 Hymn Preludes for the Base Coupler Organist Vol. 2',
+                    qty: 1,
+                    price: 16.95
+                }
+            ],
+            subtotal: 16.95,
+            shippingPrice: 6.35,
+            totalPrice: 23.30,
+            orderDate: '2025-11-08T17:00:00:00.000Z0'
         }
     }    
 }

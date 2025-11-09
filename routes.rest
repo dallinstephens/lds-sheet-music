@@ -1,4 +1,4 @@
-#### ROUTES FOR LOCALHOST
+#### ROUTES FOR LOCALHOST: Customers
 
 # ATTENTION! Need to login first at this Google login route http://localhost:3000/auth/google before other .rest links will work:
 
@@ -74,7 +74,14 @@ Content-Type: application/json
 # DELETE (DELETE) TEST: Delete customer by id
 DELETE http://localhost:3000/customers/68f45390d063df9e13f440a0 HTTP/1.1
 
-#### ROUTES FOR RENDER
+#### ROUTES FOR RENDER: Customers
+
+# ATTENTION! Need to login first at this Google login route https://lds-sheet-music.onrender.com/auth/google before other .rest links will work:
+
+# Test logout POST request: need to delete cookie
+# To test, paste cookie from browser in this: Cookie: connect.sid={{sessionCookie}}
+POST https://lds-sheet-music.onrender.com/auth/logout HTTP/1.1
+Cookie: connect.sid=s%3AyM0oNVygRcno_EY1V78VhYySymg_et9-.eBMpQPy%2FBFsLbsPixnCBoqwanNhGOP14rktKlR8hibU
 
 # GET (READ) TEST: Get all customers - This request produces a json object for data for all customers.
 GET https://lds-sheet-music.onrender.com/customers HTTP/1.1
@@ -141,3 +148,205 @@ Content-Type: application/json
 
 # DELETE (DELETE) TEST: Delete customer by id
 DELETE https://lds-sheet-music.onrender.com/customers/68f45390d063df9e13f440a0 HTTP/1.1
+
+#### ROUTES FOR LOCALHOST: Orders
+
+# ATTENTION! Need to login first at this Google login route http://localhost:3000/auth/google before other .rest links will work:
+
+# Test logout POST request: need to delete cookie
+# To test, paste cookie from browser in this: Cookie: connect.sid={{sessionCookie}}
+POST http://localhost:3000/auth/logout HTTP/1.1
+Cookie: connect.sid=s%3AyM0oNVygRcno_EY1V78VhYySymg_et9-.eBMpQPy%2FBFsLbsPixnCBoqwanNhGOP14rktKlR8hibU
+
+###
+# GET (READ) TEST: Get all orders - This request produces a json object for data for all orders.
+GET http://localhost:3000/orders HTTP/1.1
+
+###
+
+# GET (READ) TEST: Get order by id - This request produces a json object for a single order when appending ?id=someIdFromSingleOrder to /orders/.
+GET http://localhost:3000/orders/68f44922b43746b12b968028 HTTP/1.1
+
+###
+
+# POST (CREATE) TEST: Create order - Reference: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+POST http://localhost:3000/orders HTTP/1.1
+Content-Type: application/json
+
+{
+    "customer_id": "68f44871b43746b12b968024",
+    "firstName": "Dallin",
+    "lastName": "Stephens",
+    "billingAddress": {
+        "street": "120 S State St",
+        "city": "Sandy",
+        "state": "UT",
+        "zip": "84017",
+        "country": "US"
+    },
+    "shippingAddress": {
+        "street": "120 S State St",
+        "city": "Sandy",
+        "state": "UT",
+        "zip": "84017",
+        "country": "US"
+    },
+    "items": [
+        {
+            // Reference for item info: https://jackmanmusic.com/products/50-hymn-preludes-for-the-bass-coupler-organist-vol-2?_pos=1&_sid=891647fba&_ss=r&variant=31775358910582
+            "sku": "01965",
+            "title": "50 Hymn Preludes for the Base Coupler Organist Vol. 2",
+            "qty": 1,
+            "price": 16.95
+        }
+    ],
+    "subtotal": 16.95,
+    "shippingPrice": 6.35,
+    "totalPrice": 23.30,
+    "orderDate": "2025-11-08T17:00:00:00.000Z0"
+}
+
+###
+
+# PUT (UPDATE) TEST: Update order by id
+PUT http://localhost:3000/orders/68f4525ed063df9e13f44097 HTTP/1.1
+Content-Type: application/json
+
+{
+    "customer_id": "68f44871b43746b12b968024",
+    "firstName": "Dallin",
+    "lastName": "Stephens",
+    "billingAddress": {
+        "street": "120 S State St",
+        "city": "Sandy",
+        "state": "UT",
+        "zip": "84017",
+        "country": "US"
+    },
+    "shippingAddress": {
+        "street": "120 S State St",
+        "city": "Sandy",
+        "state": "UT",
+        "zip": "84017",
+        "country": "US"
+    },
+    "items": [
+        {
+            // Reference for item info: https://jackmanmusic.com/products/50-hymn-preludes-for-the-bass-coupler-organist-vol-2?_pos=1&_sid=891647fba&_ss=r&variant=31775358910582
+            "sku": "01965",
+            "title": "50 Hymn Preludes for the Base Coupler Organist Vol. 2",
+            "qty": 1,
+            "price": 16.95
+        }
+    ],
+    "subtotal": 16.95,
+    "shippingPrice": 6.35,
+    "totalPrice": 23.30,
+    "orderDate": "2025-11-08T17:00:00:00.000Z0"
+}
+
+###
+
+# DELETE (DELETE) TEST: Delete order by id
+DELETE http://localhost:3000/orders/68f45390d063df9e13f440a0 HTTP/1.1
+
+#### ROUTES FOR RENDER: Orders
+
+# ATTENTION! Need to login first at this Google login route https://lds-sheet-music.onrender.com/auth/google before other .rest links will work:
+
+# Test logout POST request: need to delete cookie
+# To test, paste cookie from browser in this: Cookie: connect.sid={{sessionCookie}}
+POST https://lds-sheet-music.onrender.com/auth/logout HTTP/1.1
+Cookie: connect.sid=s%3AyM0oNVygRcno_EY1V78VhYySymg_et9-.eBMpQPy%2FBFsLbsPixnCBoqwanNhGOP14rktKlR8hibU
+
+###
+# GET (READ) TEST: Get all orders - This request produces a json object for data for all orders.
+GET https://lds-sheet-music.onrender.com/orders HTTP/1.1
+
+###
+
+# GET (READ) TEST: Get order by id - This request produces a json object for a single order when appending ?id=someIdFromSingleOrder to /orders/.
+GET https://lds-sheet-music.onrender.com/orders/68f44922b43746b12b968028 HTTP/1.1
+
+###
+
+# POST (CREATE) TEST: Create order - Reference: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+POST https://lds-sheet-music.onrender.com/orders HTTP/1.1
+Content-Type: application/json
+
+{
+    "customer_id": "68f44871b43746b12b968024",
+    "firstName": "Dallin",
+    "lastName": "Stephens",
+    "billingAddress": {
+        "street": "120 S State St",
+        "city": "Sandy",
+        "state": "UT",
+        "zip": "84017",
+        "country": "US"
+    },
+    "shippingAddress": {
+        "street": "120 S State St",
+        "city": "Sandy",
+        "state": "UT",
+        "zip": "84017",
+        "country": "US"
+    },
+    "items": [
+        {
+            // Reference for item info: https://jackmanmusic.com/products/50-hymn-preludes-for-the-bass-coupler-organist-vol-2?_pos=1&_sid=891647fba&_ss=r&variant=31775358910582
+            "sku": "01965",
+            "title": "50 Hymn Preludes for the Base Coupler Organist Vol. 2",
+            "qty": 1,
+            "price": 16.95
+        }
+    ],
+    "subtotal": 16.95,
+    "shippingPrice": 6.35,
+    "totalPrice": 23.30,
+    "orderDate": "2025-11-08T17:00:00:00.000Z0"
+}
+
+###
+
+# PUT (UPDATE) TEST: Update order by id
+PUT https://lds-sheet-music.onrender.com/orders/68f4525ed063df9e13f44097 HTTP/1.1
+Content-Type: application/json
+
+{
+    "customer_id": "68f44871b43746b12b968024",
+    "firstName": "Dallin",
+    "lastName": "Stephens",
+    "billingAddress": {
+        "street": "120 S State St",
+        "city": "Sandy",
+        "state": "UT",
+        "zip": "84017",
+        "country": "US"
+    },
+    "shippingAddress": {
+        "street": "120 S State St",
+        "city": "Sandy",
+        "state": "UT",
+        "zip": "84017",
+        "country": "US"
+    },
+    "items": [
+        {
+            // Reference for item info: https://jackmanmusic.com/products/50-hymn-preludes-for-the-bass-coupler-organist-vol-2?_pos=1&_sid=891647fba&_ss=r&variant=31775358910582
+            "sku": "01965",
+            "title": "50 Hymn Preludes for the Base Coupler Organist Vol. 2",
+            "qty": 1,
+            "price": 16.95
+        }
+    ],
+    "subtotal": 16.95,
+    "shippingPrice": 6.35,
+    "totalPrice": 23.30,
+    "orderDate": "2025-11-08T17:00:00:00.000Z0"
+}
+
+###
+
+# DELETE (DELETE) TEST: Delete order by id
+DELETE https://lds-sheet-music.onrender.com/orders/68f45390d063df9e13f440a0 HTTP/1.1
