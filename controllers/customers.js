@@ -113,6 +113,12 @@ const createCustomer = async (req, res) => {
   try {
     const customerData = req.body;
 
+    const existingCustomer = await Customer.findOne({ email: customerData.email });
+    if (existingCustomer) {
+      return res.status(400).json({ message: 'Duplicate email. A customer with this email already exists.' });
+    }
+
+
     const newCustomer = await Customer.create(customerData);
 
     return res.status(201).json(newCustomer);
@@ -122,9 +128,9 @@ const createCustomer = async (req, res) => {
       return res.status(400).json({ message: error.message });
     }
 
-    if (error.code === 11000) {
-      return res.status(400).json({ message: 'Duplicate email. A customer with this email already exists.' });
-    }
+    // if (error.code === 11000) {
+    //   return res.status(400).json({ message: 'Duplicate email. A customer with this email already exists.' });
+    // }
 
     // error.message is used to give a simple string rather than the whole error object.
     // || 'There was an internal server error.' is so that there is a fallback message in case there was no error message.
@@ -182,8 +188,8 @@ const updateCustomerById = async (req, res) => {
     const customerData = req.body;
     
     const updatedCustomer = await Customer.findByIdAndUpdate(
-      { _id: id },
-      { $set: customerData},
+      id,
+      customerData,
       {
         // new: true, // this returns the updated document
         new: false, // This is set to false because no content is returned with 204 status code response.
