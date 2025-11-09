@@ -187,7 +187,8 @@ const updateCustomerById = async (req, res) => {
       {
         // new: true, // this returns the updated document
         new: false, // This is set to false because no content is returned with 204 status code response.
-        runValidators: true // this re-runs all schema validators on the updated data
+        runValidators: true, // this re-runs all schema validators on the updated data
+        context: 'query' // This bypasses unique email error when updating.
       }
     );
 
