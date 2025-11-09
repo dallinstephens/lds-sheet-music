@@ -181,7 +181,7 @@ const updateCustomerById = async (req, res) => {
   try {
     const customerData = req.body;
     
-    const updatedCustomer = await Customer.findByIdAndUpdate(
+    const updatedCustomer = await Customer.findOneAndUpdate(
       { _id: id },
       { $set: customerData},
       {
