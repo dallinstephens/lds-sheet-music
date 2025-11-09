@@ -163,7 +163,7 @@ const updateCustomerById = async (req, res) => {
           schema: { message: 'The customer with the given id failed to update because that id was not found or there was no change in the body for that id.' }
       }
       #swagger.responses[400] = {
-          description: 'One or more required fields are missing from the request body or the customer id format is not valid.',
+          description: 'One or more required fields are missing from the request body, an email is being used that already exists, or the customer id format is not valid.',
           schema: { message: 'One or more required fields are missing, an email was used that already exists, or customer id format is not valid.' }
       }          
       #swagger.responses[500] = {
@@ -182,8 +182,8 @@ const updateCustomerById = async (req, res) => {
     const customerData = req.body;
     
     const updatedCustomer = await Customer.findByIdAndUpdate(
-      id,
-      customerData,
+      { _id: id },
+      { $set: customerData},
       {
         // new: true, // this returns the updated document
         new: false, // This is set to false because no content is returned with 204 status code response.
@@ -206,6 +206,10 @@ const updateCustomerById = async (req, res) => {
   } catch (error) {
     if (error.name === 'ValidationError') {
       return res.status(400).json({ message: error.message });
+    }
+
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'Duplicate email. A customer with this email already exists.' });
     }
 
     if (error.kind === 'ObjectId') {
