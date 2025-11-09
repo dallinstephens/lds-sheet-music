@@ -5,21 +5,24 @@
 # Test logout POST request: need to delete cookie
 # To test, paste cookie from browser in this: Cookie: connect.sid={{sessionCookie}}
 POST http://localhost:3000/auth/logout HTTP/1.1
-Cookie: connect.sid=s%3AyM0oNVygRcno_EY1V78VhYySymg_et9-.eBMpQPy%2FBFsLbsPixnCBoqwanNhGOP14rktKlR8hibU
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 # GET (READ) TEST: Get all customers - This request produces a json object for data for all customers.
 GET http://localhost:3000/customers HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 
 # GET (READ) TEST: Get customer by id - This request produces a json object for a single customer when appending ?id=someIdFromSingleCustomer to /customers/.
 GET http://localhost:3000/customers/68f44922b43746b12b968028 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 
 # POST (CREATE) TEST: Create customer - Reference: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 POST http://localhost:3000/customers HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 Content-Type: application/json
 
 {
@@ -46,6 +49,7 @@ Content-Type: application/json
 
 # PUT (UPDATE) TEST: Update customer by id
 PUT http://localhost:3000/customers/68f4525ed063df9e13f44097 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 Content-Type: application/json
 
 {
@@ -73,6 +77,7 @@ Content-Type: application/json
 
 # DELETE (DELETE) TEST: Delete customer by id
 DELETE http://localhost:3000/customers/68f45390d063df9e13f440a0 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 #### ROUTES FOR RENDER: Customers
 
@@ -81,20 +86,23 @@ DELETE http://localhost:3000/customers/68f45390d063df9e13f440a0 HTTP/1.1
 # Test logout POST request: need to delete cookie
 # To test, paste cookie from browser in this: Cookie: connect.sid={{sessionCookie}}
 POST https://lds-sheet-music.onrender.com/auth/logout HTTP/1.1
-Cookie: connect.sid=s%3AyM0oNVygRcno_EY1V78VhYySymg_et9-.eBMpQPy%2FBFsLbsPixnCBoqwanNhGOP14rktKlR8hibU
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 # GET (READ) TEST: Get all customers - This request produces a json object for data for all customers.
 GET https://lds-sheet-music.onrender.com/customers HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 
 # GET (READ) TEST: Get customer by id - This request produces a json object for a single customer when appending ?id=someIdFromSingleCustomer to /customers/.
 GET https://lds-sheet-music.onrender.com/customers/68f44922b43746b12b968028 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 
 # POST (CREATE) TEST: Create customer - Reference: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 POST https://lds-sheet-music.onrender.com/customers HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 Content-Type: application/json
 
 {
@@ -121,6 +129,7 @@ Content-Type: application/json
 
 # PUT (UPDATE) TEST: Update customer by id
 PUT https://lds-sheet-music.onrender.com/customers/68f4525ed063df9e13f44097 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 Content-Type: application/json
 
 {
@@ -148,6 +157,7 @@ Content-Type: application/json
 
 # DELETE (DELETE) TEST: Delete customer by id
 DELETE https://lds-sheet-music.onrender.com/customers/68f45390d063df9e13f440a0 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 #### ROUTES FOR LOCALHOST: Orders
 
@@ -156,21 +166,24 @@ DELETE https://lds-sheet-music.onrender.com/customers/68f45390d063df9e13f440a0 H
 # Test logout POST request: need to delete cookie
 # To test, paste cookie from browser in this: Cookie: connect.sid={{sessionCookie}}
 POST http://localhost:3000/auth/logout HTTP/1.1
-Cookie: connect.sid=s%3AyM0oNVygRcno_EY1V78VhYySymg_et9-.eBMpQPy%2FBFsLbsPixnCBoqwanNhGOP14rktKlR8hibU
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 # GET (READ) TEST: Get all orders - This request produces a json object for data for all orders.
 GET http://localhost:3000/orders HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 
 # GET (READ) TEST: Get order by id - This request produces a json object for a single order when appending ?id=someIdFromSingleOrder to /orders/.
 GET http://localhost:3000/orders/68f44922b43746b12b968028 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 
 # POST (CREATE) TEST: Create order - Reference: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 POST http://localhost:3000/orders HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 Content-Type: application/json
 
 {
@@ -210,6 +223,7 @@ Content-Type: application/json
 
 # PUT (UPDATE) TEST: Update order by id
 PUT http://localhost:3000/orders/68f4525ed063df9e13f44097 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 Content-Type: application/json
 
 {
@@ -249,6 +263,7 @@ Content-Type: application/json
 
 # DELETE (DELETE) TEST: Delete order by id
 DELETE http://localhost:3000/orders/68f45390d063df9e13f440a0 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 #### ROUTES FOR RENDER: Orders
 
@@ -257,21 +272,24 @@ DELETE http://localhost:3000/orders/68f45390d063df9e13f440a0 HTTP/1.1
 # Test logout POST request: need to delete cookie
 # To test, paste cookie from browser in this: Cookie: connect.sid={{sessionCookie}}
 POST https://lds-sheet-music.onrender.com/auth/logout HTTP/1.1
-Cookie: connect.sid=s%3AyM0oNVygRcno_EY1V78VhYySymg_et9-.eBMpQPy%2FBFsLbsPixnCBoqwanNhGOP14rktKlR8hibU
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 # GET (READ) TEST: Get all orders - This request produces a json object for data for all orders.
 GET https://lds-sheet-music.onrender.com/orders HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 
 # GET (READ) TEST: Get order by id - This request produces a json object for a single order when appending ?id=someIdFromSingleOrder to /orders/.
 GET https://lds-sheet-music.onrender.com/orders/68f44922b43746b12b968028 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 
 ###
 
 # POST (CREATE) TEST: Create order - Reference: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 POST https://lds-sheet-music.onrender.com/orders HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 Content-Type: application/json
 
 {
@@ -303,14 +321,14 @@ Content-Type: application/json
     ],
     "subtotal": 16.95,
     "shippingPrice": 6.35,
-    "totalPrice": 23.30,
-    "orderDate": "2025-11-08T17:00:00:00.000Z0"
+    "totalPrice": 23.30
 }
 
 ###
 
 # PUT (UPDATE) TEST: Update order by id
 PUT https://lds-sheet-music.onrender.com/orders/68f4525ed063df9e13f44097 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8
 Content-Type: application/json
 
 {
@@ -350,3 +368,4 @@ Content-Type: application/json
 
 # DELETE (DELETE) TEST: Delete order by id
 DELETE https://lds-sheet-music.onrender.com/orders/68f45390d063df9e13f440a0 HTTP/1.1
+Cookie: connect.sid=s%3A0fFaF4zmMQmkHC0MG1VabTRWZ_vXEoeL.H8B8M%2BfvshWHU%2FOg29Z%2B%2BaHHisjXIxl1b1dgk6QduB8

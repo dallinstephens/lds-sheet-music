@@ -855,10 +855,6 @@
         "totalPrice": {
           "type": "number",
           "example": 23.3
-        },
-        "orderDate": {
-          "type": "string",
-          "example": "2025-11-08T17:00:00:00.000Z0"
         }
       }
     }

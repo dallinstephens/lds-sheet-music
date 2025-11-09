@@ -9,6 +9,8 @@ const Customer = require('../models/customer');
 // .config() takes the key value pairs in the .env file and loads them into the variable process.env
 require('dotenv').config();
 
+const BASE_URL = process.env.RENDER_URL || 'http://localhost:3000';
+
 // 'passport.use(new GoogleStrategy({' is used to define the process of logging in with Google.
 // 'new GoogleStrategy' creates a new instance of Google OAuth 2.0 Strategy.
 passport.use(new GoogleStrategy({
@@ -20,7 +22,7 @@ passport.use(new GoogleStrategy({
     // When user clicks "Sign in with Google", it redirects the browser to Google's official login domain at accounts.google.com.
     // When user clicks "Sign in with Google", the express server via passport builds and passes a hidden special url that 
     // contains clientID, scope, and callbackURL to accounts.google.com.
-    callbackURL: "https://lds-sheet-music.onrender.com/auth/google/callback",
+    callbackURL: `${BASE_URL}/auth/google/callback`,
     // The scope requests permissions from Google to obtain the user's Google profile and the user's Google email.
     scope: ['profile', 'email']
   },
