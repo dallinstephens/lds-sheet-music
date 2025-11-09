@@ -78,6 +78,10 @@ const isProduction = process.env.NODE_ENV === 'production';
 // process.env.MONGODB_URI retreives MONGODB_URI variable from host such as Render.
 const MONGODB_URI = process.env.MONGODB_URI;
 
+if (isProduction) {
+  app.set('trust proxy', 1); // This is needed so that render will work with customers, etc.
+}
+
 // Using session cookie instead of JWT
 // Reference for express-session: https://expressjs.com/en/resources/middleware/session.html
 app.use(session({
