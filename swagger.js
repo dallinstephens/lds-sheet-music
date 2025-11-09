@@ -55,8 +55,7 @@ const doc = {
             ],
             subtotal: 16.95,
             shippingPrice: 6.35,
-            totalPrice: 23.30,
-            orderDate: '2025-11-08T17:00:00:00.000Z0'
+            totalPrice: 23.30
         }
     }    
 }
